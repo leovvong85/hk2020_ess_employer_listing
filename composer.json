@@ -1,0 +1,19 @@
+{
+    "name": "leo/hk2020_ess_employer_listing",
+    "description": "Listing employers which applied Employment Support Scheme",
+    "type": "project",
+    "require": {
+        "smalot/pdfparser": "^0.16.0"
+    },
+    "authors": [
+        {
+            "name": "Leo Wong",
+            "email": "leungchi@me.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "leo\\": "src"
+        }
+    }
+}

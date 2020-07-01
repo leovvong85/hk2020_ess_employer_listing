@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Listing</title>
+
+    <link rel="stylesheet" href="https://cdn.webix.com/7.3/webix.css" type="text/css">
+    <script src="https://cdn.webix.com/7.3/webix.js" type="text/javascript"></script>
+</head>
+<style>
+    .company-name > div.webix_cell {
+        text-overflow: ellipsis;
+    }
+</style>
+<body>
+
+
+<script>
+
+    var ui = {
+        "rows": [
+            {
+                "css": "webix_dark",
+                "view": "toolbar",
+                "cols": [
+                    { "icon": "wxi-eye", "view": "icon", "height": 38, "width": 38 },
+                    { "view": "label", "label": "List of Employers with Approved Wage Subsidy" },
+                    { id: "search_companyname", "view": "search", placeholder: "Keyword to search a company" }
+                ]
+            },
+
+            {
+                id: "list",
+                view: 'datatable',
+                footer: true,
+                url: 'data-source/data20200625042110.json',
+                css: "webix_header_border webix_data_border",
+                resizeColumn: true,
+                tooltip: true,
+                columns: [
+                    {
+                        id: 'id',
+                        header: 'Company Name',
+                        width: 300,
+                        css: "company-name",
+                        sort: "string"
+                    },
+                    {
+                        id: 'n2',
+                        header: '',
+                        width: 300,
+                        css: "company-name",
+                        sort: "string"
+                    },
+                    {
+                        id: 'm',
+                        header: 'Month',
+                        width: 160,
+                        tooltip: "",
+                    },
+                    {
+                        id: 'a',
+                        header: 'Subsidy amount',
+                        format: function(value) {
+                            return webix.i18n.numberFormat(value);
+                        },
+                        css: {'text-align':'right'},
+                        width: 150,
+                        sort: "int",
+                        tooltip: "",
+                        footer: { content:"summColumn",
+                            css: {'text-align':'right'}, },
+                    },
+                    {
+                        id: 'h',
+                        header: 'Headcount',
+                        // format: function(value) {
+                        //     return webix.i18n.numberFormat(value);
+                        // },
+                        css: {'text-align':'right'},
+                        width: 120,
+                        sort: "int",
+                        tooltip: "",
+                        footer: { content:"summColumn",
+                            css: {'text-align':'right'}, },
+                    },
+                    {
+                        fillspace: true,
+                    }
+                ]
+            }
+        ]
+    };
+
+    webix.ui(ui);
+
+
+    $$("search_companyname").attachEvent("onTimedKeyPress", function() {
+        //get user input value
+        var value = this.getValue().toLowerCase();
+
+        $$("list").filter(function(obj){
+            if (obj.id.toLowerCase().indexOf(value) >= 0) {
+                return true;
+            }
+
+            if (obj.n2.toLowerCase().indexOf(value) >= 0) {
+                return true;
+            }
+
+            return false;
+        })
+
+    });
+</script>
+
+
+</body>
+</html>
